@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-svc2
+  # labels of this service
+  labels:
+    app: hello-world
+spec:
+  # this is optional as ClusterIP is default
+  type: ClusterIP
+  ports:
+    # ServicePort array. So we need to supply array here
+      # port exposed by service
+    - port: 8080 
+      # port assigned  to cluster ip    
+      targetPort: 31001
+      protocol: TCP
+  # Route service traffic to pods with label keys and values matching this selector. 
+  selector:
+    app: hello-world

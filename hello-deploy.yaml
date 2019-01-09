@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # name of deployment
+  name: hello-deploy
+spec:
+  replicas: 3
+  selector:
+    # matching selectors for pods
+    matchLabels:
+      app: hello-world
+  # Minimum number of seconds for which a newly created pod should be ready without any of its container crashing, 
+  # for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
+  minReadySeconds: 10
+  strategy:
+    # Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
+    type: RollingUpdate
+    rollingUpdate:
+      # The maximum number of pods that can be unavailable during the update. 
+      # Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). 
+      maxUnavailable: 1
+      # The maximum number of pods that can be scheduled above the desired number of pods. Value can be an absolute 
+      # number (ex: 5) or a percentage of desired pods (ex: 10%). 
+      maxSurge: 1
+  # Template describes the pods that will be created.
+  template:
+    metadata:
+      # labels of the pod
+      labels:
+        app: hello-world
+    # Pod Spec
+    spec:
+      containers:
+      - name: hello-pod
+        image: nigelpoulton/k8sbook:latest
+        ports:
+        - containerPort: 8080
