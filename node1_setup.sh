@@ -9,10 +9,11 @@ kubectl apply -n kube-system -f \
 yum install binutils vim net-tools openssl grep bash-completion -y
 
 # apply kubectl auto-completion
-source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
 #
 echo see ~/kubeadm_init.log for kubeadm logs
 
 echo "To join in other nodes:"
 echo "kubeadm join $(kubectl cluster-info |grep master|egrep -o 'https://\S+') --token $(kubeadm token list|grep authentication|cut -d' ' -f1) --discovery-token-ca-cert-hash sha256:$(openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null |openssl dgst -sha256 -hex|sed 's/^.* //')"
+
 
