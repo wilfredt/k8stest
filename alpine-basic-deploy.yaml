@@ -9,7 +9,7 @@ spec:
     # matching selectors for pods
     matchLabels:
       app: alpine-basic
-  minReadySeconds: 10
+  minReadySeconds: 15
   strategy:
     # Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
     type: RollingUpdate
